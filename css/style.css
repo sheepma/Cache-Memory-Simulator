@@ -1,0 +1,57 @@
+/* CSS Task Maneger - 2017, Mateus Lins Aceto*/
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+	flex: 1 0 auto;
+	margin-top: 16px;
+}
+
+footer{
+	min-height: 70px;
+}
+
+
+.logo-type{
+	width: 77px;
+	height: auto;
+	margin-top: 2px;
+	margin-left: 1px;
+}
+
+
+
+.user-photo-type{
+	width: 80px;
+	height: 80px;
+}
+
+.user-photo-nav-type{
+	width: 110px !important;
+	height: 110px !important;
+}
+
+.user-background{
+	width:100%;
+
+}
+
+
+@media only screen and (max-width: 790px) {
+    .mobilebtn{
+		width:100%;
+		margin-top: 7px !important;
+	}
+
+}
+      
+
+}
+
+
+
+
