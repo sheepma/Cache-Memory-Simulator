@@ -79,6 +79,8 @@ var app =
 		self.main_memory = function(){			
 			if(memoriaPrincipal[0] == undefined)	
 				memoriaPrincipal = self.main_memory_init();
+			else
+				$('#mainMemory').html(" ");
 			for(var i = 0; i<256; i++){
 				$('#mainMemory').append(
 					'<tr>' +
@@ -134,9 +136,11 @@ var app =
 		
 		self.processorEvents = function(){
 			var endereco;
+			var endereco2;
 			var dado;
 			var bloco;
 			var foudCache;
+			var dadoToMain;
 			$('#writeBtn').click(function(){ //escrita
 				endereco = $('#enderecoInput').val();
 				dado = $('#dadoInput').val();
@@ -179,6 +183,10 @@ var app =
 						   else if(memoriaCache[i].rotulo != 'XXX' && memoriaCache[i+1].rotulo != 'XXX' && memoriaCache[i].LRU < memoriaCache[i+1].LRU){
 							   i++;
 						   }
+						   if(memoriaCache[i].rotulo != 'XXX'){
+							   dadoToMain = [memoriaCache[i].celula0, memoriaCache[i].celula1, memoriaCache[i].celula2, memoriaCache[i].celula3];endereco2 = memoriaCache[i].rotulo + endereco[1] + '00';
+							   self.writeMain(dadoToMain, endereco2);  	 
+						   }
 						   memoriaCache[i].rotulo = endereco[0];
 						   memoriaCache[i].celula0 = bloco[0];
 						   memoriaCache[i].celula1 = bloco[1];
@@ -207,6 +215,79 @@ var app =
 				self.cache_memory();
 			});
 			
+			$('#readBtn').click(function(){ //Leitura
+				endereco = $('#enderecoInput').val();
+				dado = $('#dadoInput').val();
+				endereco = endereco.match(/.{1,3}/g);
+				for(var i =0; i<16; i++){
+					if(endereco[0] == memoriaCache[i].rotulo){
+						if(endereco[1] == memoriaCache[i].quadro){
+							foudCache = true;	
+							$('#dadoInput').focus();
+							if(endereco[2] == '00'){
+								$('#dadoInput').val(memoriaCache[i].celula0);	
+							}
+							else if(endereco[2] == '01'){
+								$('#dadoInput').val(memoriaCache[i].celula1);
+							}
+							else if(endereco[2] == '10'){
+								$('#dadoInput').val(memoriaCache[i].celula2);
+							}
+							else{
+								$('#dadoInput').val(memoriaCache[i].celula3);
+							}
+							memoriaCache[i].valido = 1;
+							self.LRU(i);
+						    self.readHit();
+							break;
+						}
+												
+					}
+					else{
+						foudCache = false;
+					}
+				}
+				if(!foudCache){ //caso não achou na cache....
+				   bloco = self.findMain(endereco);
+				   for(var i =0; i<16; i++){
+					   if(endereco[1] == memoriaCache[i].quadro){ //right back
+						   if(memoriaCache[i].rotulo != 'XXX' && memoriaCache[i+1].rotulo == 'XXX'){ //LRU
+							   i++;
+						   }
+						   else if(memoriaCache[i].rotulo != 'XXX' && memoriaCache[i+1].rotulo != 'XXX' && memoriaCache[i].LRU < memoriaCache[i+1].LRU){
+							   i++;
+						   }
+						   if(memoriaCache[i].rotulo != 'XXX'){
+							   dadoToMain = [memoriaCache[i].celula0, memoriaCache[i].celula1, memoriaCache[i].celula2, memoriaCache[i].celula3];endereco2 = memoriaCache[i].rotulo + endereco[1] + '00';
+							   self.writeMain(dadoToMain, endereco2);  	 
+						   }						   
+						   memoriaCache[i].rotulo = endereco[0];
+						   memoriaCache[i].celula0 = bloco[0];
+						   memoriaCache[i].celula1 = bloco[1];
+						   memoriaCache[i].celula2 = bloco[2];
+						   memoriaCache[i].celula3 = bloco[3];
+						   $('#dadoInput').focus();
+						   if(endereco[2] == '00'){
+								$('#dadoInput').val(memoriaCache[i].celula0);	
+							}
+							else if(endereco[2] == '01'){
+								$('#dadoInput').val(memoriaCache[i].celula1);
+							}
+							else if(endereco[2] == '10'){
+								$('#dadoInput').val(memoriaCache[i].celula2);
+							}
+							else{
+								$('#dadoInput').val(memoriaCache[i].celula3);
+							}						  
+						   memoriaCache[i].valido = 1;
+						   self.readMiss();
+						   self.LRU(i);
+						   break;	
+					   }
+				   }	
+				}
+				self.cache_memory();
+			});
 		}
 		
 		
@@ -221,6 +302,21 @@ var app =
 			}
 			return bloco;	
 		}
+		
+		self.writeMain = function(dados, endereco){
+			for(var i = 0; i<256; i++){
+				if(memoriaPrincipal[i].endereco == endereco){
+					memoriaPrincipal[i].word = dados[0];
+					memoriaPrincipal[i+1].word = dados[1];
+					memoriaPrincipal[i+2].word = dados[2];
+					memoriaPrincipal[i+3].word = dados[3];
+					break;
+				}
+			}
+			self.main_memory();
+			
+		}
+		
 		
 		//LRU 
 		
