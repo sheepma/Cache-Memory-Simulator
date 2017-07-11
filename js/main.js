@@ -92,6 +92,8 @@ var app =
 		}
 
 		self.cache_memory = function(){	
+
+
 			var check1, check2;
 			
 			if(memoriaCache[0] == undefined)	
@@ -157,7 +159,8 @@ var app =
 							}
 							memoriaCache[i].sujo = 1;
 							memoriaCache[i].valido = 1;
-						    break;
+						    self.writeHit();
+							break;
 						}
 												
 					}
@@ -188,6 +191,7 @@ var app =
 							}
 						   memoriaCache[i].sujo = 1;
 						   memoriaCache[i].valido = 1;
+						   self.writeMiss();
 						   break;	
 					   }
 				   }	
@@ -212,6 +216,41 @@ var app =
 		
 		
 		//Status
+		
+		self.writeMiss = function(){
+			status1.Faltas++;
+		    status1.Faltas_Escrita++;
+		    status1.Escritas++;
+		    status1.Acessos++;
+		    self.updateStatus();
+			
+		}
+		
+		
+		self.readMiss = function(){
+			status1.Faltas++;
+		    status1.Faltas_Leitura++;
+		    status1.Leituras++;
+		    status1.Acessos++;
+		    self.updateStatus();			
+		}
+		
+		self.writeHit = function(){
+			status1.Acertos++;
+			status1.Acessos++;
+			status1.Acertos_Escrita++;
+			status1.Escritas++;
+			self.updateStatus();
+		}
+		
+		
+		self.readHit = function(){
+			status1.Acertos++;
+			status1.Acessos++;
+			status1.Acertos_Leitura++;
+			status1.Leituras++;
+			self.updateStatus();			
+		}
 		
 		self.updateStatus = function(){
 			$('#statusInfo').html(' ');
