@@ -1,160 +1,151 @@
 ﻿<!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, min-resolution: 144dpi" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="materialize/materialize.css" media="screen,projection" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection" />
-    <title>Simulador de Memória Cache</title>
-</head>
-
-<body>
-
-    <header>
-        <!-- Componente do Menu, tanto do normal como do Mobile....-->		
-			<nav>
-            <div class="nav-wrapper   teal lighten-2">
-                <a href="#!" class="brand-logo"><img src="img/logo.png" class="logo-type"></a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li class="active"><a href="index.html">Memória Cache</a></li>
-                    <li><a href="newCard.html">Como Usar</a></li>
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li class="active"><a href="index.html" class="waves-effect waves-yellow">Memória Cache</a></li>
-                    <li><a href="newCard.html" class="waves-effect waves-yellow">Como Usar</a></li>
-                </ul>
-            </div>
-			</nav>
-		</div>		
-    </header>
-    <main>
-		<div class="row grid">
-        <div class="col s12 m4 grid-item">
-          <div class="card  blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Dados</span>
-            <div class="row">
-				<form class="col s12">
-				  <div class="row">
-					<div class="input-field col s12">
-					  <input id="enderecoInput" type="text" class="validate">
-					  <label for="last_name" style="color:white">Endereço</label>
-					</div>
-					<div class="input-field col s12">
-					  <input id="dadoInput" type="text" class="validate">
-					  <label for="last_name" style="color:white">Dado</label>
-					</div>
-				  </div>
-				</form>
-			</div>
-            <div class="card-action">
-              <a class="waves-effect waves-light mobilebtn btn" id="readBtn"><i class="material-icons left">mode_edit</i>Ler</a>
-			  <a class="waves-effect waves-light mobilebtn btn" id="writeBtn"><i class="material-icons left">library_books</i>Escrever</a>
-            </div>
-          </div>
-        </div>
-      </div>
-		<div class="col s12 m4 grid-item">
-          <div class="card  teal">
-            <div class="card-content white-text" id ="statusInfo">
-              <span class="card-title">Estatísticas</span>
-				<p>Número de Acessos:</p>
-				<p>Número de Acertos:</p>
-				<p>Número de Faltas:</p>
-				<p>Número de Leituras:</p>
-				<p>Número de Escritas:</p>
-				<p>Número de Acertos na Leitura:</p>
-				<p>Número de Acertos na Escrita:</p>
-				<p>Número de Faltas na Leitura:</p>
-				<p>Número de Faltas na Escrita:</p>			   
-            
-          </div>
-        </div>
-		</div>
-		
-		<div class="col s12 m4 grid-item">
-          <div class="card  blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Memória Principal</span>
-	 <table class="bordered">
-        <thead>
-          <tr>
-              <th>Endereço</th>
-              <th>Bloco</th>
-              <th>Dado</th>
-          </tr>
-        </thead>
-
-        <tbody id = "mainMemory">
-          
-        </tbody>
-      </table>
-				
-          </div>
-        </div>
-      </div>
-		<div class="col s12 m8 grid-item">
-          <div class="card  blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Memória Cache</span>
-			  <table class="bordered">
-				<thead>
-				  <tr>
-					  <th>Rótulo</th>
-					  <th>Quadro</th>
-					  <th>Célula 0</th>
-					  <th>Célula 1</th>
-					  <th>Célula 2</th>
-					  <th>Célula 3</th>
-					  <th>Sujo</th>
-					  <th>Válido</th>
-					  <th>LRU</th>
-				  </tr>
-				</thead>
-				<tbody id = "cacheMemory">
-					
-				</tbody>
-			  </table>
-	
-			  
-				
-          </div>
-        </div>
-      </div>
-	  </div>
-		
-		
-		
-    </main>
-
-    <footer class="page-footer  teal lighten-2">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-					<p class="white-text">Luan Félix</p>
-                    <p class="white-text">Marlon Galvão</p>
-					<p class="white-text">Mateus Lins Aceto</p>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, min-resolution: 144dpi" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="materialize/materialize.css" media="screen,projection" />
+        <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection" />
+        <title>Simulador de Memória Cache</title>
+    </head>
+    <body>
+        <header>
+            <!-- Componente do Menu, tanto do normal como do Mobile....-->		
+            <nav>
+                <div class="nav-wrapper   teal lighten-2">
+                    <a href="#!" class="brand-logo"><img src="img/logo.png" class="logo-type"></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li class="active"><a href="index.html">Memória Cache</a></li>
+                        <li><a href="newCard.html">Como Usar</a></li>
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li class="active"><a href="index.html" class="waves-effect waves-yellow">Memória Cache</a></li>
+                        <li><a href="newCard.html" class="waves-effect waves-yellow">Como Usar</a></li>
+                    </ul>
                 </div>
-				
+            </nav>
+            </div>		
+        </header>
+        <main>
+            <div class="fixed-action-btn toolbar">
+                <a class="btn-floating btn-large indigo">
+                <i class="large material-icons">settings</i>
+                </a>
+                <ul>
+                    <li class="waves-effect waves-light"><a href="#!" id ="autoMode"><i class="material-icons">play_circle_outline</i> Modo Automático</a></li>
+                    <li class="waves-effect waves-light"><a href="#!" id ="newMainValue"><i class="material-icons">repeat</i> Novos Valores</a></li>
+                    <li class="waves-effect waves-light"><a href="#!" id ="renewAll"><i class="material-icons">cached</i> Zerar tudo</a></li>
+                </ul>
             </div>
-			
-		</div>
-		<div class="footer-copyright">
-					<div class="container">
-						2017 - Universidade Federal da Fronteira Sul (Ciência da Computação)
-					</div>
-				</div>
-    </footer>
-
-    <script type="text/javascript" src="jquery/jquery-2.2.1.js"></script>
-    <script type="text/javascript" src="materialize/materialize.js"></script>
-    <script type="text/javascript" src="masonry/masonry.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-</body>
-
+            <div class="row grid">
+                <div class="col s12 m4 grid-item">
+                    <div class="card  blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Dados</span>
+                            <div class="row">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input id="enderecoInput" type="text" class="validate">
+                                            <label for="last_name" style="color:white">Endereço</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="dadoInput" type="text" class="validate">
+                                            <label for="last_name" style="color:white">Dado</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-action">
+                                <a class="waves-effect waves-light mobilebtn btn" id="readBtn"><i class="material-icons left">mode_edit</i>Ler</a>
+                                <a class="waves-effect waves-light mobilebtn btn" id="writeBtn"><i class="material-icons left">library_books</i>Escrever</a>
+                                <a class="waves-effect waves-light mobilebtn white-text" id="deleteAll" style="float:right; margin-top:10px; margin-right:-20px"><i class="material-icons left">delete</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4 grid-item">
+                    <div class="card  teal">
+                        <div class="card-content white-text" id ="statusInfo">
+                            <span class="card-title">Estatísticas</span>
+                            <p>Número de Acessos:</p>
+                            <p>Número de Acertos:</p>
+                            <p>Número de Faltas:</p>
+                            <p>Número de Leituras:</p>
+                            <p>Número de Escritas:</p>
+                            <p>Número de Acertos na Leitura:</p>
+                            <p>Número de Acertos na Escrita:</p>
+                            <p>Número de Faltas na Leitura:</p>
+                            <p>Número de Faltas na Escrita:</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4 grid-item">
+                    <div class="card  blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Memória Principal</span>
+                            <table class="bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Endereço</th>
+                                        <th>Bloco</th>
+                                        <th>Dado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id = "mainMemory">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m8 grid-item">
+                    <div class="card  blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">Memória Cache</span>
+                            <table class="bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Rótulo</th>
+                                        <th>Quadro</th>
+                                        <th>Célula 0</th>
+                                        <th>Célula 1</th>
+                                        <th>Célula 2</th>
+                                        <th>Célula 3</th>
+                                        <th>Sujo</th>
+                                        <th>Válido</th>
+                                        <th>LRU</th>
+                                    </tr>
+                                </thead>
+                                <tbody id = "cacheMemory">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="page-footer  teal lighten-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <p class="white-text">Luan Félix</p>
+                        <p class="white-text">Marlon Galvão</p>
+                        <p class="white-text">Mateus Lins Aceto</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    2017 - Universidade Federal da Fronteira Sul (Ciência da Computação)
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" src="jquery/jquery-2.2.1.js"></script>
+        <script type="text/javascript" src="materialize/materialize.js"></script>
+        <script type="text/javascript" src="masonry/masonry.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>
 </html>
