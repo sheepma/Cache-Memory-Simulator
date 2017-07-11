@@ -159,6 +159,7 @@ var app =
 							}
 							memoriaCache[i].sujo = 1;
 							memoriaCache[i].valido = 1;
+							self.LRU(i);
 						    self.writeHit();
 							break;
 						}
@@ -171,7 +172,13 @@ var app =
 				if(!foudCache){ //caso não achou na cache....
 				   bloco = self.findMain(endereco);
 				   for(var i =0; i<16; i++){
-					   if(endereco[1] == memoriaCache[i].quadro){
+					   if(endereco[1] == memoriaCache[i].quadro){ //right back
+						   if(memoriaCache[i].rotulo != 'XXX' && memoriaCache[i+1].rotulo == 'XXX'){ //LRU
+							   i++;
+						   }
+						   else if(memoriaCache[i].rotulo != 'XXX' && memoriaCache[i+1].rotulo != 'XXX' && memoriaCache[i].LRU < memoriaCache[i+1].LRU){
+							   i++;
+						   }
 						   memoriaCache[i].rotulo = endereco[0];
 						   memoriaCache[i].celula0 = bloco[0];
 						   memoriaCache[i].celula1 = bloco[1];
@@ -192,6 +199,7 @@ var app =
 						   memoriaCache[i].sujo = 1;
 						   memoriaCache[i].valido = 1;
 						   self.writeMiss();
+						   self.LRU(i);
 						   break;	
 					   }
 				   }	
@@ -214,6 +222,16 @@ var app =
 			return bloco;	
 		}
 		
+		//LRU 
+		
+		self.LRU = function(k){
+			memoriaCache[k].LRU = 0;
+			for(var i =0; i<16; i++){
+				if(i!=k && memoriaCache[i].rotulo != 'XXX'){
+					memoriaCache[i].LRU++;
+				}
+			}
+		}
 		
 		//Status
 		
